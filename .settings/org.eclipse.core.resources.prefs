@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/jsp/back/list.jsp=UTF-8
+encoding//WebRoot/WEB-INF/jsp/front/talk.jsp=UTF-8
+encoding//src/com/panlei/bean/Command.java=UTF-8
+encoding//src/com/panlei/bean/CommandContent.java=UTF-8
+encoding//src/com/panlei/service/QueryService.java=UTF-8
+encoding//src/com/panlei/util/Iconst.java=UTF-8

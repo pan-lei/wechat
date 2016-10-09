@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Message">
+<!-- 
+	配置数据库中列名与java中javabean的属性的对应关系
+	type="com.panlei.bean.Message" 指定类
+	id="MessageResult" 
+	id标签 表示主键    result标签 表示普通列
+	column="ID" 列名
+	property="id" 属性名
+ -->
+  <resultMap type="com.panlei.bean.Message" id="MessageResult">
+    <id column="ID" jdbcType="INTEGER" property="id"/>
+    <result column="COMMAND" jdbcType="VARCHAR" property="command"/>
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+    <result column="CONTENT" jdbcType="VARCHAR" property="content"/>
+  </resultMap>
+<!-- 
+	定义SQL语句
+	注意id唯一，还有前面的namespace,这是为了在dao层的调用
+	resultMap="MessageResult"    指向对应标签的id，意思是吧查询结果放到对应关系中
+	parameterType="com.panlei.bean.Message" 动态传参
+	<if test="command!=null and !&quot;&quot;.equals(command.trim())">and COMMAND=#{command}</if>
+	上面一句是进行判断查询指令是否为空，不为空就进行赋值
+	and COMMAND=#{command}  注意这一句
+ -->
+  <select id="queryMessageList" parameterType="com.panlei.bean.Message" resultMap="MessageResult">
+    select ID,COMMAND,DESCRIPTION,CONTENT from MESSAGE where 1=1
+    <if test="command!=null and !&quot;&quot;.equals(command.trim())">and COMMAND=#{command}</if>
+    <if test="description!=null and !&quot;&quot;.equals(description.trim())">and DESCRIPTION like '%' #{description} '%'</if>
+  </select>
+  
+  <delete id="deleteOne" parameterType="int">
+  	delete from MESSAGE where ID = #{_parameter}
+  </delete>
+  
+  <delete id="deleteBatch" parameterType="java.util.List">
+  	delete from MESSAGE where ID in(
+  		<foreach collection="list" item="item" separator=",">
+  			#{item}
+  		</foreach>
+  	)
+  </delete>
+</mapper>
